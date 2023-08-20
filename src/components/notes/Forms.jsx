@@ -10,7 +10,7 @@ const Container = styled(Box)`
     display: flex;
     flex-direction: column;
     margin: auto;
-    box-shadow: 0 3px 5px rgba(0,0,0,.20);
+    box-shadow: 0 2px 3px rgba(0,0,0,.20);
     width: 500px;
     background-clip: padding-box;
     border-color: #e0e0e000;
