@@ -1,10 +1,15 @@
 
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef, useContext } from "react";
 
 import { Box, TextField, ClickAwayListener } from "@mui/material";
 import { styled } from "@mui/material/styles";
 
-import {useDropzone} from "react-dropzone";
+//import {useDropzone} from "react-dropzone";
+
+import { DataContext } from "../../context/DataProvider";
+
+import {v4 as uuid} from "uuid";
+
 
 const Container = styled(Box)`
     display: flex;
@@ -20,81 +25,39 @@ const Container = styled(Box)`
     padding: 5px 15px;
 `
 
-const thumbsContainer = {
-    display: 'flex',
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-    marginTop: 16
-  };
-  
-  const thumb = {
-    display: 'inline-flex',
-    borderRadius: 2,
-    border: '1px solid #eaeaea',
-    marginBottom: 8,
-    marginRight: 8,
-    width: 100,
-    height: 100,
-    padding: 4,
-    boxSizing: 'border-box'
-  };
-  
-  const thumbInner = {
-    display: 'flex',
-    minWidth: 0,
-    overflow: 'hidden'
-  };
-  
-  const img = {
-    display: 'block',
-    width: 'auto',
-    height: '100%'
-  };
+const note = {
+    id: '',
+    heading: '',
+    text: ''
+}
 
 const Forms = () => {
-
-    const [files, setFiles] = useState([]);
-  const {getRootProps, getInputProps} = useDropzone({
-    accept: {
-      'imgs/*': []
-    },
-    onDrop: acceptedFiles => {
-      setFiles(acceptedFiles.map(file => Object.assign(file, {
-        preview: URL.createObjectURL(file)
-      })));
-    }
-  });
   
-  const thumbs = files.map(file => (
-    <div style={thumb} key={file.name}>
-      <div style={thumbInner}>
-        <img
-          src={file.preview}
-          style={img}
-          // Revoke data uri after image is loaded
-          onLoad={() => { URL.revokeObjectURL(file.preview) }}
-         alt="previewImg"/>
-      </div>
-    </div>
-  ));
-
-  useEffect(() => {
-    // Make sure to revoke the data uris to avoid memory leaks, will run on unmount
-    return () => files.forEach(file => URL.revokeObjectURL(file.preview));
-  }, []);
-
     const [showTextField, setShowTextField] = useState(false);
+    const [addNote, setAddNote] = useState({...note, id: uuid()});
 
+    const { setNotes } = useContext(DataContext);
     const containerRef = useRef();
 
     const onTextAreaClcik = () => {
           setShowTextField(true);
-          containerRef.current.style.minHeight = '140px'
+          containerRef.current.style.minHeight = '80px'
     }
 
     const handleClickAway = () => {
         setShowTextField(false);
         containerRef.current.style.minHeight = '15px'
+        setAddNote({...note, id: uuid()})
+
+        if(addNote.heading || addNote.text )
+        {
+           setNotes(prevArr => [addNote, ...prevArr]);
+        }
+    }
+
+    const onTextChange = (e) => {
+      let changedNote = {...addNote, [e.target.name]: e.target.value}
+      setAddNote(changedNote);
     }
 
      return (
@@ -107,10 +70,12 @@ const Forms = () => {
                             variant="standard"
                             InputProps={{ disableUnderline: true }}
                             style={{ marginBottom: 10}}
+                            onChange={(e) => onTextChange(e)}
+                            name="heading"
+                            value={addNote.heading}
                             />
-                        
                     }
-                
+                  
                     <TextField 
                         placeholder="Create new Meme...."
                         multiline
@@ -118,18 +83,10 @@ const Forms = () => {
                         variant="standard"
                         InputProps={{ disableUnderline: true}}
                         onClick={onTextAreaClcik}
+                        onChange={(e) => onTextChange(e)}
+                        name="text"
+                        value={addNote.text}
                     />
-                    { showTextField &&
-                            <section className="container">
-                            <div {...getRootProps({className: 'dropzone'})}>
-                              <input {...getInputProps()} />
-                              <p>Drag & drop meme image here or click to select files</p>
-                            </div>
-                            <aside style={thumbsContainer}>
-                              {thumbs}
-                            </aside>
-                          </section>
-                    }
             </Container>
           </ClickAwayListener>
           

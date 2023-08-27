@@ -5,6 +5,9 @@
 /.pnp
 .pnp.js
 Dockerfile
+demo.txt
+newdockerfile 
+.dockerignore
 
 # testing
 /coverage
