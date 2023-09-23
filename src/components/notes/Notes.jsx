@@ -6,6 +6,7 @@ import { styled } from "@mui/material/styles";
 import Forms from "./Forms";
 import Note from "./Note";
 
+import Emptynotes from "./Emptynotes";
 
 import { DataContext } from "../../context/DataProvider";
 
@@ -24,7 +25,8 @@ const Notes = () => {
                 <Box sx={{ p: 3, width: '100%' }}>
                 <DrawerHeader />
                 <Forms />
-                <Grid container style={{marginTop: '8px', width: '1040px', margin: 'auto'}}>
+                { notes.length > 0 ?
+                <Grid container style={{marginTop: '20px!important', width: '1050px', margin: 'auto'}}>
                     {
                         notes.map(note => (
                             <Grid item>
@@ -33,6 +35,8 @@ const Notes = () => {
                         ))
                     }
                 </Grid> 
+                   : <Emptynotes />
+                }
                 </Box>
             </Box>
     )

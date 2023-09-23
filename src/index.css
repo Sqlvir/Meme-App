@@ -71,6 +71,11 @@ body {
    background:#eee;
 }*/
 
+.css-11lq3yg-MuiGrid-root
+{
+   margin-top: 20px!important;
+}
+
 .css-h4y409-MuiList-root
 {
     padding-top:15px!important;
@@ -140,7 +145,8 @@ body {
 
 .css-11n0r2k
 {
-   padding: 50px!important;
+   padding: 30px!important;
+   padding-left: 50px!important;
 }
 
 .css-1aa5qj0-MuiInputBase-root-MuiInput-root
@@ -180,4 +186,61 @@ body {
 
 .css-2dum1v-MuiDrawer-docked .css-h4y409-MuiList-root .css-bshv44-MuiButtonBase-root-MuiListItem-root .css-cveggr-MuiListItemIcon-root .css-i4bv87-MuiSvgIcon-root:hover{
   fill:#202124!important;
+}
+
+.MuiCard-root:hover{
+  box-shadow: 0 1px 2px 0 rgba(60,64,67,0.302), 0 1px 3px 1px rgba(60,64,67,0.149);
+  border-radius:8px;
+}
+
+.MuiCardActions-root{
+  visibility: hidden!important;
+}
+
+.MuiCard-root:hover .MuiCardActions-root{
+   visibility: visible!important;
+}
+
+.MuiCardActions-spacing{
+  padding-left: 15px!important;
+  padding-bottom:3px!important;
+  padding-top: 0px!important;
+}
+.MuiSvgIcon-fontSize28px{
+    width: 22px!important;
+    height: 22px!important;
+    padding: 7px!important;
+    margin-right: -8px;
+    opacity: 0.9;
+  border: 1px solid transparent;
+}
+.MuiSvgIcon-fontSize28px:hover{
+    background: rgba(95,99,104,0.157);
+    border-radius: 50%;
+    opacity: 10;
+    color:#000;
+    cursor: pointer;
+}
+
+.zoom-in-out-box{
+  animation: zoom-in-zoom-out 3s ease infinite;
+  opacity: 0.6;
+  color:#b9b8b3;
+}
+
+@keyframes zoom-in-zoom-out {
+  0% {
+    transform: scale(0.8, 0.8);
+    color:#626262;
+  }
+  50% {
+    transform: scale(1, 1);
+    color: #706b68;
+    opacity: 0.5;
+  }
+  100% {
+    transform: scale(0.8, 0.8);
+    color: #9b999b;
+    opacity: 0.5;
+  }
 }
